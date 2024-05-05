@@ -11,25 +11,28 @@ namespace LambastNamespace
 
         public override void _EnterTree()
         {
-            base._EnterTree();
-            if (DamagingArea == null)
+            if (Engine.IsEditorHint())
             {
-                GD.Print("Damaging area " + GD.VarToStr(DamagingArea));
-                DamagingArea = this.GetNodeOrNull<Area3D>("DamageArea");
+                base._EnterTree();
                 if (DamagingArea == null)
                 {
-                    DamagingArea = new();
-                    this.AddChild(DamagingArea);
-                    DamagingArea.Name = "DamageArea";
-                    DamagingArea.Owner = DamagingArea.GetTree().EditedSceneRoot;
-                }
-                CollisionShapeNode = this.GetNodeOrNull<CollisionShape3D>("DamageShape");
-                if (CollisionShapeNode == null)
-                {
-                    CollisionShapeNode = new();
-                    this.AddChild(CollisionShapeNode);
-                    CollisionShapeNode.Name = "DamageShape";
-                    CollisionShapeNode.Owner = CollisionShapeNode.GetTree().EditedSceneRoot;
+                    GD.Print("Damaging area " + GD.VarToStr(DamagingArea));
+                    DamagingArea = this.GetNodeOrNull<Area3D>("DamageArea");
+                    if (DamagingArea == null)
+                    {
+                        DamagingArea = new();
+                        this.AddChild(DamagingArea);
+                        DamagingArea.Name = "DamageArea";
+                        DamagingArea.Owner = DamagingArea.GetTree().EditedSceneRoot;
+                    }
+                    CollisionShapeNode = this.GetNodeOrNull<CollisionShape3D>("DamageShape");
+                    if (CollisionShapeNode == null)
+                    {
+                        CollisionShapeNode = new();
+                        this.AddChild(CollisionShapeNode);
+                        CollisionShapeNode.Name = "DamageShape";
+                        CollisionShapeNode.Owner = CollisionShapeNode.GetTree().EditedSceneRoot;
+                    }
                 }
             }
             //     DamagingArea.AreaEntered += AddAreaToHitNodes;

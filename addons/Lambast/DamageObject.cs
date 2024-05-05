@@ -37,31 +37,34 @@ namespace LambastNamespace
         // TODO: add ExitTree function to remove children given ref.
         public override void _EnterTree()
         {
-            CooldownTimer = this.GetNodeOrNull<Timer>("Timer");
-            if (CooldownTimer == null)
+            if (Engine.IsEditorHint())
             {
-                CooldownTimer = new();
-                this.AddChild(CooldownTimer);
-                CooldownTimer.Name = "Timer";
-                CooldownTimer.Owner = CooldownTimer.GetTree().EditedSceneRoot;
-            }
-            CooldownTimer.OneShot = true;
-            CooldownTimer.Timeout += () => FlipFlop = true;
-            DamageObjectAnimationPlayer = this.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
-            if (DamageObjectAnimationPlayer == null)
-            {
-                DamageObjectAnimationPlayer = new();
-                this.AddChild(DamageObjectAnimationPlayer);
-                DamageObjectAnimationPlayer.Name = "AnimationPlayer";
-                DamageObjectAnimationPlayer.Owner = CooldownTimer.GetTree().EditedSceneRoot;
-            }
-            DamageObjectAudioStreamPlayer3D = this.GetNodeOrNull<AudioStreamPlayer3D>("AudioStreamPlayer3D");
-            if (DamageObjectAudioStreamPlayer3D == null)
-            {
-                DamageObjectAudioStreamPlayer3D = new();
-                this.AddChild(DamageObjectAudioStreamPlayer3D);
-                DamageObjectAudioStreamPlayer3D.Name = "AudioStreamPlayer3D";
-                DamageObjectAudioStreamPlayer3D.Owner = DamageObjectAudioStreamPlayer3D.GetTree().EditedSceneRoot;
+                CooldownTimer = this.GetNodeOrNull<Timer>("Timer");
+                if (CooldownTimer == null)
+                {
+                    CooldownTimer = new();
+                    this.AddChild(CooldownTimer);
+                    CooldownTimer.Name = "Timer";
+                    CooldownTimer.Owner = CooldownTimer.GetTree().EditedSceneRoot;
+                }
+                CooldownTimer.OneShot = true;
+                CooldownTimer.Timeout += () => FlipFlop = true;
+                DamageObjectAnimationPlayer = this.GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+                if (DamageObjectAnimationPlayer == null)
+                {
+                    DamageObjectAnimationPlayer = new();
+                    this.AddChild(DamageObjectAnimationPlayer);
+                    DamageObjectAnimationPlayer.Name = "AnimationPlayer";
+                    DamageObjectAnimationPlayer.Owner = CooldownTimer.GetTree().EditedSceneRoot;
+                }
+                DamageObjectAudioStreamPlayer3D = this.GetNodeOrNull<AudioStreamPlayer3D>("AudioStreamPlayer3D");
+                if (DamageObjectAudioStreamPlayer3D == null)
+                {
+                    DamageObjectAudioStreamPlayer3D = new();
+                    this.AddChild(DamageObjectAudioStreamPlayer3D);
+                    DamageObjectAudioStreamPlayer3D.Name = "AudioStreamPlayer3D";
+                    DamageObjectAudioStreamPlayer3D.Owner = DamageObjectAudioStreamPlayer3D.GetTree().EditedSceneRoot;
+                }
             }
         }
 

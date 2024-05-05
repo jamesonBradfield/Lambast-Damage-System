@@ -9,15 +9,17 @@ namespace LambastNamespace
         private CollisionShape3D HurtCollider;
         public override void _EnterTree()
         {
-            HurtCollider = this.GetNodeOrNull<CollisionShape3D>("HurtAreaCollider");
-            if (HurtCollider == null)
+            if (Engine.IsEditorHint())
             {
-                HurtCollider = new();
-                this.AddChild(HurtCollider);
-                HurtCollider.Name = "HurtAreaCollider";
-                HurtCollider.Owner = HurtCollider.GetTree().EditedSceneRoot;
+                HurtCollider = this.GetNodeOrNull<CollisionShape3D>("HurtAreaCollider");
+                if (HurtCollider == null)
+                {
+                    HurtCollider = new();
+                    this.AddChild(HurtCollider);
+                    HurtCollider.Name = "HurtAreaCollider";
+                    HurtCollider.Owner = HurtCollider.GetTree().EditedSceneRoot;
+                }
             }
-
         }
         public override void _ExitTree()
         {

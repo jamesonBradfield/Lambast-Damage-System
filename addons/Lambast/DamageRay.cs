@@ -11,18 +11,21 @@ namespace LambastNamespace
 
         public override void _EnterTree()
         {
-            base._EnterTree();
-            Ray = this.GetNodeOrNull<RayCast3D>("RayCast3D");
-            if (Ray == null)
+            if (Engine.IsEditorHint())
             {
-                Ray = new();
-                this.AddChild(Ray);
-                Ray.Name = "RayCast3D";
-                Ray.Owner = Ray.GetTree().EditedSceneRoot;
+                base._EnterTree();
+                Ray = this.GetNodeOrNull<RayCast3D>("RayCast3D");
+                if (Ray == null)
+                {
+                    Ray = new();
+                    this.AddChild(Ray);
+                    Ray.Name = "RayCast3D";
+                    Ray.Owner = Ray.GetTree().EditedSceneRoot;
+                }
+                Ray.TargetPosition = Vector3.Forward * 100;
+                Ray.CollideWithBodies = false;
+                Ray.CollideWithAreas = true;
             }
-            Ray.TargetPosition = Vector3.Forward * 100;
-            Ray.CollideWithBodies = false;
-            Ray.CollideWithAreas = true;
         }
 
         public override void _ExitTree()
