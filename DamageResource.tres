@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DamageResource" load_steps=2 format=3 uid="uid://ck0owjolhd7lh"]
+
+[ext_resource type="Script" path="res://addons/Lambast/DamageResource.cs" id="1_nrbgx"]
+
+[resource]
+script = ExtResource("1_nrbgx")
+Type = ""
+DamageNumber = 100.0
+Cooldown = 0.126
