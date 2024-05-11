@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-LambastSignalManager="*res://addons/Lambast/LambastSignalManager.cs"
 Panku="*res://addons/panku_console/console.tscn"
+LambastSignalManager="*res://addons/Lambast/LambastSignalManager.cs"
 
 [dotnet]
 

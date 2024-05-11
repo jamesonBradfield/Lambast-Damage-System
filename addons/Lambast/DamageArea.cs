@@ -1,87 +1,90 @@
 using Godot;
-using System;
 namespace LambastNamespace
 {
     [Tool]
     public partial class DamageArea : DamageObject
     {
+        [Export]
         private Area3D DamagingArea;
+        [Export]
         private CollisionShape3D CollisionShapeNode;
+        [Export]
         private Godot.Collections.Array<HurtArea3D> HitNodes = new();
 
+        // Spawn child nodes when node with script enters tree.
         public override void _EnterTree()
         {
-            if (Engine.IsEditorHint())
+            base._EnterTree();
+            if (DamagingArea == null)
             {
-                base._EnterTree();
+                GD.Print("DamageArea ~ Damagingarea : " + GD.VarToStr(DamagingArea));
+                DamagingArea = this.GetNodeOrNull<Area3D>("DamageArea");
                 if (DamagingArea == null)
                 {
-                    GD.Print("Damaging area " + GD.VarToStr(DamagingArea));
-                    DamagingArea = this.GetNodeOrNull<Area3D>("DamageArea");
-                    if (DamagingArea == null)
-                    {
-                        DamagingArea = new();
-                        this.AddChild(DamagingArea);
-                        DamagingArea.Name = "DamageArea";
-                        DamagingArea.Owner = DamagingArea.GetTree().EditedSceneRoot;
-                    }
-                    CollisionShapeNode = this.GetNodeOrNull<CollisionShape3D>("DamageShape");
-                    if (CollisionShapeNode == null)
-                    {
-                        CollisionShapeNode = new();
-                        this.AddChild(CollisionShapeNode);
-                        CollisionShapeNode.Name = "DamageShape";
-                        CollisionShapeNode.Owner = CollisionShapeNode.GetTree().EditedSceneRoot;
-                    }
+                    DamagingArea = new();
+                    this.AddChild(DamagingArea);
+                    DamagingArea.Name = "DamageArea";
+                    DamagingArea.Owner = DamagingArea.GetTree().EditedSceneRoot;
+                }
+                CollisionShapeNode = DamagingArea.GetNodeOrNull<CollisionShape3D>("DamageShape");
+                GD.Print("DamageArea ~ CollisionShapeNode : " + GD.VarToStr(CollisionShapeNode));
+                if (CollisionShapeNode == null)
+                {
+                    CollisionShapeNode = new();
+                    DamagingArea.AddChild(CollisionShapeNode);
+                    CollisionShapeNode.Name = "DamageShape";
+                    CollisionShapeNode.Owner = CollisionShapeNode.GetTree().EditedSceneRoot;
                 }
             }
-            //     DamagingArea.AreaEntered += AddAreaToHitNodes;
-            //     DamagingArea.AreaExited += RemoveAreaFromHitNodes;
-            // }
-            // else
-            // {
-            //     DamagingArea.AreaEntered += AddAreaToHitNodes;
-            //     DamagingArea.AreaExited += RemoveAreaFromHitNodes;
-            // }
+        }
+
+        // Connect Area3D signals on start of Scene to damageArea Entered.
+        public override void _Ready()
+        {
+            base._Ready();
+            if (!Engine.IsEditorHint())
+            {
+                DamagingArea.AreaEntered += OnAreaEntered;
+                DamagingArea.AreaExited += OnAreaExited;
+            }
         }
 
 
-        // protected void AddAreaToHitNodes(Area3D area)
-        // {
-        //     GD.Print(area);
-        //     if (area is HurtArea3D)
-        //     {
-        //         GD.Print("Area has been added to Hit nodes");
-        //         HitNodes.Add(area as HurtArea3D);
-        //         (area as HurtArea3D).SubscribeToDamageObject(this);
-        //     }
-        // }
-        //
-        // protected void RemoveAreaFromHitNodes(Area3D area)
-        // {
-        //     if (area is HurtArea3D)
-        //     {
-        //         GD.Print("Area has been removed from Hit nodes");
-        //         HitNodes.Remove(area as HurtArea3D);
-        //         (area as HurtArea3D).UnsubscribeToDamageObject(this);
-        //     }
-        // }
+        public void OnAreaEntered(Area3D area)
+        {
+            GD.Print("OnAreaEntered called");
+            if (area is HurtArea3D)
+            {
+                HitNodes.Add(area as HurtArea3D);
+                DamageInstanceDone += (area as HurtArea3D).SendDamageToHealthBar;
+            }
+        }
+
+        public void OnAreaExited(Area3D area)
+        {
+            GD.Print("OnAreaEntered called");
+            if (area is HurtArea3D)
+            {
+                HitNodes.Remove(area as HurtArea3D);
+                DamageInstanceDone -= (area as HurtArea3D).SendDamageToHealthBar;
+            }
+        }
+        public override void _PhysicsProcess(double delta)
+        {
+            base._PhysicsProcess(delta);
+        }
+
 
         protected override void DealDamage()
         {
-            for (int i = 0; i <= HitNodes.Count; i++)
+            for (int i = 0; i <= HitNodes.Count - 1; i++)
             {
                 GD.Print("about to damage " + HitNodes[i]);
-                //NOTE: we really have to find a better way of doing this
-                EmitSignal("DamageInstanceDone", Damage[CurrentInstances].DamageNumber, CurrentInstances);
-            }
-            if (Debug && !Engine.IsEditorHint())
-            {
-                GD.Print("deal_damage has been called with index of " + GD.VarToStr(CurrentInstances) + " and a damage of " + GD.VarToStr(Damage[CurrentInstances].DamageNumber));
-                GD.Print("current_instances : " + GD.VarToStr(CurrentInstances));
             }
             base.DealDamage();
         }
+
+
         protected override void InitDamageObject(DamageResource[] _damage)
         {
             base.InitDamageObject(_damage);

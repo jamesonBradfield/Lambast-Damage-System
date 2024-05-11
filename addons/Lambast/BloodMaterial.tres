@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c3h36tr0k3euq"]
+
+[ext_resource type="Texture2D" uid="uid://q3xsfln6jgvo" path="res://addons/Lambast/TempBlood.png" id="1_ffdiy"]
+
+[resource]
+render_priority = 10
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_ffdiy")
+billboard_mode = 2
+billboard_keep_scale = true

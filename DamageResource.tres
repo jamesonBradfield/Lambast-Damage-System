@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_nrbgx")
 Type = ""
-DamageNumber = 100.0
-Cooldown = 0.126
+DamageNumber = 10.0
+Cooldown = 1.0
