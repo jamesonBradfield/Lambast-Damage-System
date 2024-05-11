@@ -1,11 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://nwwier183sx7"]
+[gd_scene load_steps=18 format=3 uid="uid://nwwier183sx7"]
 
 [ext_resource type="Script" path="res://addons/Lambast/HurtArea3D.cs" id="2_ooylw"]
 [ext_resource type="Script" path="res://addons/Lambast/DamageTimerExample.cs" id="4_kpght"]
 [ext_resource type="Resource" uid="uid://ck0owjolhd7lh" path="res://DamageResource.tres" id="5_kr2oq"]
 [ext_resource type="Script" path="res://addons/Lambast/HealthBar3D.cs" id="5_q5sew"]
 [ext_resource type="Script" path="res://addons/Lambast/DamageArea.cs" id="6_dn3ys"]
-[ext_resource type="Material" uid="uid://c3h36tr0k3euq" path="res://addons/Lambast/BloodMaterial.tres" id="6_h2dfq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0bwtf"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,15 +14,18 @@ ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
 sky_material = SubResource("ProceduralSkyMaterial_0bwtf")
 
 [sub_resource type="Environment" id="Environment_e831n"]
+resource_local_to_scene = true
 background_mode = 2
 sky = SubResource("Sky_076bm")
 tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vjb5w"]
+resource_local_to_scene = true
 albedo_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_20auh"]
+resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_vjb5w")
 size = Vector2(29.195, 10)
 
@@ -32,55 +34,24 @@ transparency = 1
 albedo_color = Color(0.898039, 0, 0.360784, 0.764706)
 
 [sub_resource type="BoxMesh" id="BoxMesh_pbi8c"]
+resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_dwgvy")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_66mni"]
+resource_local_to_scene = true
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_r0dce"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_du0x4"]
 viewport_path = NodePath("EnemyTest/HealthBar3D/SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_krxhp"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_u22bn"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_uqqjy"]
 viewport_path = NodePath("EnemyTest2/HealthBar3D/SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ybt3b"]
 size = Vector3(3.07465, 2.32117, 7.48242)
 
-[sub_resource type="Curve" id="Curve_lduwf"]
-resource_local_to_scene = true
-_data = [Vector2(0, 1), 0.0, -0.140214, 0, 0, Vector2(0.99084, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_phq7r"]
-resource_local_to_scene = true
-curve = SubResource("Curve_lduwf")
-
-[sub_resource type="Gradient" id="Gradient_2vfjw"]
-colors = PackedColorArray(0.473976, 0.473976, 0.473976, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_ve4jw"]
-gradient = SubResource("Gradient_2vfjw")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hhapc"]
-lifetime_randomness = 0.4
-direction = Vector3(0, 6, 0)
-spread = 20.63
-initial_velocity_min = 3.0
-initial_velocity_max = 9.0
-gravity = Vector3(0, -15.875, 0)
-linear_accel_min = 0.56
-linear_accel_max = 4.58
-scale_min = 0.01
-color_ramp = SubResource("GradientTexture1D_ve4jw")
-alpha_curve = SubResource("CurveTexture_phq7r")
-turbulence_noise_strength = 0.01
-collision_mode = 2
-
-[sub_resource type="QuadMesh" id="QuadMesh_6aant"]
-material = ExtResource("6_h2dfq")
-
-[node name="TestScene" type="Node3D"]
+[node name="TestScene" type="SubViewport"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
@@ -147,7 +118,7 @@ show_percentage = false
 
 [node name="Sprite3D" type="Sprite3D" parent="EnemyTest/HealthBar3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.89642, 0)
-texture = SubResource("ViewportTexture_r0dce")
+texture = SubResource("ViewportTexture_du0x4")
 
 [node name="EnemyTest2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.467064, 0, -1.7599)
@@ -198,7 +169,7 @@ show_percentage = false
 
 [node name="Sprite3D" type="Sprite3D" parent="EnemyTest2/HealthBar3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.89642, 0)
-texture = SubResource("ViewportTexture_u22bn")
+texture = SubResource("ViewportTexture_uqqjy")
 
 [node name="DamageTimer" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.50931, 0.82337, 0)
@@ -225,14 +196,3 @@ one_shot = true
 [node name="DamageShape" type="CollisionShape3D" parent="DamageTimer/DamageArea/DamageArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.969391, 0.660583, -3.24121)
 shape = SubResource("BoxShape3D_ybt3b")
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00604, 0)
-emitting = false
-amount = 30
-one_shot = true
-explosiveness = 1.0
-fixed_fps = 15
-collision_base_size = 1.0
-process_material = SubResource("ParticleProcessMaterial_hhapc")
-draw_pass_1 = SubResource("QuadMesh_6aant")
