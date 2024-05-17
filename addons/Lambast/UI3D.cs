@@ -44,8 +44,8 @@ namespace LambastNamespace
                 subViewport.AddChild(control);
                 control.Name = "Control";
                 control.Owner = control.GetTree().EditedSceneRoot;
+				control.SetAnchorsPreset(Control.LayoutPreset.FullRect, false);	
             }
-            control.SetAnchorsPreset(Control.LayoutPreset.Center, false);
             control.LayoutMode = 1;
             control.SetOffsetsPreset(Control.LayoutPreset.Center);
             Sprite3DNode = this.GetNodeOrNull<Sprite3D>("Sprite3D");

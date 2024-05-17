@@ -2,10 +2,19 @@
 
 [ext_resource type="PackedScene" uid="uid://nwwier183sx7" path="res://addons/Lambast/TestScene.tscn" id="1_vkhaa"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ltnpu"]
-viewport_path = NodePath("TestScene")
+[sub_resource type="ViewportTexture" id="ViewportTexture_qgnob"]
+viewport_path = NodePath("TextureRect/TestScene")
 
-[node name="TextureRect" type="TextureRect"]
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -13,7 +22,29 @@ offset_left = -256.0
 offset_right = 256.0
 offset_bottom = 512.0
 grow_horizontal = 2
-texture = SubResource("ViewportTexture_ltnpu")
+texture = SubResource("ViewportTexture_qgnob")
 stretch_mode = 4
 
-[node name="TestScene" parent="." instance=ExtResource("1_vkhaa")]
+[node name="TestScene" parent="TextureRect" instance=ExtResource("1_vkhaa")]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -255.0
+offset_top = 510.0
+offset_right = 255.0
+offset_bottom = 550.0
+grow_horizontal = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 263.0
+offset_bottom = 20.0
+grow_vertical = 2
+text = "CameraPosition"

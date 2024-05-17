@@ -25,6 +25,7 @@ namespace LambastNamespace
                     this.AddChild(DamagingArea);
                     DamagingArea.Name = "DamageArea";
                     DamagingArea.Owner = DamagingArea.GetTree().EditedSceneRoot;
+                    GD.Print("DamageArea ~ Damagingarea : " + GD.VarToStr(DamagingArea));
                 }
                 CollisionShapeNode = DamagingArea.GetNodeOrNull<CollisionShape3D>("DamageShape");
                 GD.Print("DamageArea ~ CollisionShapeNode : " + GD.VarToStr(CollisionShapeNode));
@@ -34,6 +35,8 @@ namespace LambastNamespace
                     DamagingArea.AddChild(CollisionShapeNode);
                     CollisionShapeNode.Name = "DamageShape";
                     CollisionShapeNode.Owner = CollisionShapeNode.GetTree().EditedSceneRoot;
+                    GD.Print("DamageArea ~ CollisionShapeNode : " + GD.VarToStr(CollisionShapeNode));
+                    CollisionShapeNode.Shape = new BoxShape3D();
                 }
             }
         }

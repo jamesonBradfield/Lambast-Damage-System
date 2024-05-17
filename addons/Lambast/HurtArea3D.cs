@@ -19,6 +19,7 @@ namespace LambastNamespace
                 this.AddChild(HurtCollider);
                 HurtCollider.Name = "HurtAreaCollider";
                 HurtCollider.Owner = HurtCollider.GetTree().EditedSceneRoot;
+                HurtCollider.Shape = new BoxShape3D();
             }
 
         }
