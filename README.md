@@ -1,3 +1,9 @@
+# What is Lambast Damage System
+Built with composition in mind, this plugin supplies the basic building blocks of a damage system for 3D games (without all the hassle of messing with scenes and running your own damageSystem from scratch).
+This means we will not be adding fields to edit your nodes in our scripts, that's for you to mess with, the idea is these nodes can be used in a variety of games, edited and reused to fit your needs.
+
+# What Lambast will never be
+Lambast isn't aiming to be a fully fledged damage system for say a (FPS game), but it is building a foundation hopefully others will find worthy of tinkering with and building their own stuff.
 
 ## How To Use
 This C# plugin contains a couple of main classes, the important ones are (DamageObject, DamageArea, DamageRay, and ISignalDamageObject)
