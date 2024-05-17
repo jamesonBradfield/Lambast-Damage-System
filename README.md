@@ -3,14 +3,15 @@
 This C# plugin contains a couple of main classes, the important ones are (DamageObject, DamageArea, DamageRay, and ISignalDamageObject)
 
 ### Usage is simple
-![](https://github.com/jamesonBradfield/Lambast-Damage-System/blob/master/addons/Lambast/CodeSnap_2024-05-17_at_11%3A23%3A03.png)
+![](https://github.com/jamesonBradfield/Lambast-Damage-System/blob/master/media/CodeSnap_2024-05-17_at_11%3A23%3A03.png)
 simply install the plugin, and add a DamageRay, set it to increment (or whatever you really need) and add your signalObject via the SignalObject Field.
 Add a HealthBar3D to your enemy (this will also add a hurtArea).
 edit the colliders if needed.
+![](https://github.com/jamesonBradfield/Lambast-Damage-System/blob/master/media/DamageAreaExample.gif)
 
 ## Intricacies of the plugin
 
-Lambast Diagram Here
+![](https://github.com/jamesonBradfield/Lambast-Damage-System/blob/master/media/Lambast%20Diagram.png)
 
 
 ## Extending the plugin

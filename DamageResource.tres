@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://addons/Lambast/DamageResource.cs" id="1_nrbgx"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_nrbgx")
 Type = ""
 DamageNumber = 10.0
