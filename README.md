@@ -25,5 +25,6 @@ You Can extend DamageObject and create your own DamageThingies. Stuff I would li
 
 
 ## TODO (Future Updates)
+For now the Signals/delegates need reworking, I would like to have seperate downstream and upstream signals/delegates for each step in damaging.
 Ultimately I would like to create an Effect system that changes the way damageObjects deal damage to hurtAreas. IE (poison, burning, melting, etc...) this will take a bit more thought than I have to spare at the moment.
 

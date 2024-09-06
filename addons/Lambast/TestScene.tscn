@@ -38,12 +38,12 @@ albedo_color = Color(0.898039, 0, 0.360784, 0.764706)
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_dwgvy")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_2204r"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_w3ww2"]
 viewport_path = NodePath("EnemyTest2/HealthBar3D/SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_unu22"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_17o1m"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_4d4mj"]
 viewport_path = NodePath("EnemyTest3/HealthBar3D/SubViewport")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dpsfy"]
@@ -106,7 +106,7 @@ show_percentage = false
 
 [node name="Sprite3D" type="Sprite3D" parent="EnemyTest2/HealthBar3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06215, 0)
-texture = SubResource("ViewportTexture_2204r")
+texture = SubResource("ViewportTexture_w3ww2")
 
 [node name="HurtArea" type="Area3D" parent="EnemyTest2"]
 script = ExtResource("2_ooylw")
@@ -150,7 +150,7 @@ show_percentage = false
 
 [node name="Sprite3D" type="Sprite3D" parent="EnemyTest3/HealthBar3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.889378, 0)
-texture = SubResource("ViewportTexture_17o1m")
+texture = SubResource("ViewportTexture_4d4mj")
 
 [node name="HurtArea" type="Area3D" parent="EnemyTest3"]
 script = ExtResource("2_ooylw")
@@ -161,14 +161,13 @@ shape = SubResource("BoxShape3D_dpsfy")
 [node name="DamageTimer" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.03218, 0.82337, 0)
 script = ExtResource("4_kpght")
-damage = Array[Object]([ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq")])
+damage = Array[Object]([ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq")])
 
-[node name="DamageArea" type="Node3D" parent="DamageTimer" node_paths=PackedStringArray("DamagingArea", "CollisionShapeNode", "SignalObjectNode")]
+[node name="DamageArea" type="Node3D" parent="DamageTimer" node_paths=PackedStringArray("hitArea", "CollisionShapeNode", "SignalObjectNode")]
 script = ExtResource("6_dn3ys")
-DamagingArea = NodePath("DamageArea")
+hitArea = NodePath("DamageArea")
 CollisionShapeNode = NodePath("DamageArea/DamageShape")
 Damage = []
-Increment = true
 SignalObjectNode = NodePath("..")
 
 [node name="Timer" type="Timer" parent="DamageTimer/DamageArea"]
@@ -186,7 +185,7 @@ shape = SubResource("BoxShape3D_i2skm")
 [node name="DamageRay" type="Node3D" parent="DamageTimer" node_paths=PackedStringArray("SignalObjectNode")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.79491, 0.066417, 0)
 script = ExtResource("6_i46vg")
-Increment = true
+Damage = []
 SignalObjectNode = NodePath("..")
 
 [node name="Timer" type="Timer" parent="DamageTimer/DamageRay"]

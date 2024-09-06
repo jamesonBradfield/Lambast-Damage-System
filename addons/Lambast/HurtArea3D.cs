@@ -5,7 +5,7 @@ namespace LambastNamespace
     public partial class HurtArea3D : Area3D
     {
         [Signal]
-        public delegate void UpdateHealthEventHandler(float HealthLost);
+        public delegate void UpdateHealthDownStreamEventHandler(float HealthLost);
         private CollisionShape3D HurtCollider;
 
 
@@ -24,11 +24,10 @@ namespace LambastNamespace
 
         }
 
-
-        public void SendDamageToHealthBar(float Damage, int _CurrentAmmo)
+        public void SendDamageToHealthBar(float Damage)
         {
             GD.Print("HurtArea3D ~ " + GD.VarToStr(this.Name) + " has taken " + GD.VarToStr(Damage) + " damage!");
-            EmitSignal("UpdateHealth", Damage);
+            EmitSignal("UpdateHealthDownStream", Damage);
         }
     }
 }

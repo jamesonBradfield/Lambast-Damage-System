@@ -9,9 +9,9 @@ namespace LambastNamespace
         private HurtArea3D HurtArea;
         private HurtArea3D LastHurtArea;
 
-
         public override void _EnterTree()
         {
+            // spawn necessary nodes for both damageArea and others
             base._EnterTree();
             Ray = this.GetNodeOrNull<RayCast3D>("RayCast3D");
             GD.Print("DamageRay ~ Ray : " + GD.VarToStr(Ray));
@@ -21,7 +21,7 @@ namespace LambastNamespace
                 this.AddChild(Ray);
                 Ray.Name = "RayCast3D";
                 Ray.Owner = Ray.GetTree().EditedSceneRoot;
-                GD.Print("DamageRay ~ Ray : " + GD.VarToStr(Ray));
+                // GD.Print("DamageRay ~ Ray : " + GD.VarToStr(Ray));
 
             }
             Ray.TargetPosition = Vector3.Forward * 100;
@@ -32,23 +32,25 @@ namespace LambastNamespace
         public override void _PhysicsProcess(double delta)
         {
             base._PhysicsProcess(delta);
-            if (Ray.GetCollider() is HurtArea3D)
+            if (Ray.GetCollider() is not HurtArea3D)
             {
-                if ((Area3D)Ray.GetCollider() as HurtArea3D != HurtArea)
-                {
-                    HurtArea = (Area3D)Ray.GetCollider() as HurtArea3D;
-                    DamageInstanceDone += HurtArea.SendDamageToHealthBar;
-                    GD.Print("DamageRay ~ " + GD.VarToStr(HurtArea.Name) + " subscribed to DamageInstanceDone");
-                }
-                if (HurtArea != null)
-                {
-                    LastHurtArea = HurtArea;
-                }
-                if (LastHurtArea != HurtArea)
-                {
-                    GD.Print("DamageRay ~ " + GD.VarToStr(HurtArea.Name) + " unsubscribed from DamageInstanceDone");
-                    DamageInstanceDone -= LastHurtArea.SendDamageToHealthBar;
-                }
+                return;
+            }
+            if ((Area3D)Ray.GetCollider() as HurtArea3D == HurtArea)
+            {
+                return;
+            }
+            HurtArea = (Area3D)Ray.GetCollider() as HurtArea3D;
+            DamageInstanceDoneDownStream += HurtArea.SendDamageToHealthBar;
+            GD.Print("DamageRay ~ " + GD.VarToStr(HurtArea.Name) + " subscribed to DamageInstanceDone");
+            if (HurtArea != null)
+            {
+                LastHurtArea = HurtArea;
+            }
+            if (LastHurtArea != HurtArea)
+            {
+                GD.Print("DamageRay ~ " + GD.VarToStr(HurtArea.Name) + " unsubscribed from DamageInstanceDone");
+                DamageInstanceDoneDownStream -= LastHurtArea.SendDamageToHealthBar;
             }
         }
 

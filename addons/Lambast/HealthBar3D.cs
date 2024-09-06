@@ -5,7 +5,7 @@ namespace LambastNamespace
     public partial class HealthBar3D : UI3D
     {
         [Signal]
-        public delegate void HealthIsDepletedEventHandler();
+        public delegate void HealthIsDepletedUpStreamEventHandler();
         private HurtArea3D HurtArea;
         private ProgressBar HealthBarNode;
         public override void _EnterTree()
@@ -47,7 +47,7 @@ namespace LambastNamespace
         }
         public override void _Ready()
         {
-            HurtArea.UpdateHealth += UpdateHealth;
+            HurtArea.UpdateHealthDownStream += UpdateHealth;
         }
 
         private void UpdateHealth(float HealthLost)
@@ -62,7 +62,7 @@ namespace LambastNamespace
                 HealthBarNode.Value = HealthRatio * HealthBarNode.MaxValue;
                 if (HealthBarNode.Value <= 0)
                 {
-                    EmitSignal("HealthIsDepleted");
+                    EmitSignal("HealthIsDepletedUpStream");
                 }
             }
         }
