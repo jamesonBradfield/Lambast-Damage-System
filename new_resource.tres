@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="DamageResource" load_steps=2 format=3 uid="uid://d073ykhw4jhef"]
-
-[ext_resource type="Script" path="res://addons/Lambast/DamageResource.cs" id="1_olahw"]
-
-[resource]
-script = ExtResource("1_olahw")
-Type = ""
-DamageNumber = 25.0
-Cooldown = 0.1

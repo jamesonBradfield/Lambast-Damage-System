@@ -55,15 +55,9 @@ namespace LambastNamespace
         }
 
 
-        protected override void DealDamage()
+        protected override void DealDamage(DamageResource damage)
         {
-            base.DealDamage();
-        }
-
-
-        protected override void InitDamageObject(DamageResource[] _damage)
-        {
-            base.InitDamageObject(_damage);
+            base.DealDamage(damage);
         }
     }
 }

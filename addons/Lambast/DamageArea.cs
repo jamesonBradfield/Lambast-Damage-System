@@ -18,7 +18,6 @@ namespace LambastNamespace
             base._EnterTree();
             if (hitArea == null)
             {
-                GD.Print("DamageArea ~ hitarea : " + GD.VarToStr(hitArea));
                 hitArea = this.GetNodeOrNull<Area3D>("DamageArea");
                 if (hitArea == null)
                 {
@@ -26,19 +25,18 @@ namespace LambastNamespace
                     this.AddChild(hitArea);
                     hitArea.Name = "DamageArea";
                     hitArea.Owner = hitArea.GetTree().EditedSceneRoot;
-                    GD.Print("DamageArea ~ hitArea: " + GD.VarToStr(hitArea));
                 }
+                GD.Print("DamageArea ~ hitarea : " + GD.VarToStr(hitArea.Name));
                 CollisionShapeNode = hitArea.GetNodeOrNull<CollisionShape3D>("DamageShape");
-                GD.Print("DamageArea ~ CollisionShapeNode : " + GD.VarToStr(CollisionShapeNode));
                 if (CollisionShapeNode == null)
                 {
                     CollisionShapeNode = new();
                     hitArea.AddChild(CollisionShapeNode);
                     CollisionShapeNode.Name = "DamageShape";
                     CollisionShapeNode.Owner = CollisionShapeNode.GetTree().EditedSceneRoot;
-                    GD.Print("DamageArea ~ CollisionShapeNode : " + GD.VarToStr(CollisionShapeNode));
                     CollisionShapeNode.Shape = new BoxShape3D();
                 }
+                GD.Print("DamageArea ~ CollisionShapeNode : " + GD.VarToStr(CollisionShapeNode.Name));
             }
         }
 
@@ -72,14 +70,9 @@ namespace LambastNamespace
         {
             base._PhysicsProcess(delta);
         }
-        protected override void DealDamage()
+        protected override void DealDamage(DamageResource damage)
         {
-            base.DealDamage();
-        }
-
-        protected override void InitDamageObject(DamageResource[] _damage)
-        {
-            base.InitDamageObject(_damage);
+            base.DealDamage(damage);
         }
     }
 }
