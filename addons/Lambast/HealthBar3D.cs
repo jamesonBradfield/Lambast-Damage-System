@@ -4,10 +4,13 @@ namespace LambastNamespace
     [Tool]
     public partial class HealthBar3D : UI3D
     {
+
         [Signal]
         public delegate void HealthIsDepletedUpStreamEventHandler();
+        [Export]
         private HurtArea3D HurtArea;
         private ProgressBar HealthBarNode;
+
         public override void _EnterTree()
         {
             GD.Print("HealthBar3D ~ EnterTree was called.");
@@ -45,6 +48,7 @@ namespace LambastNamespace
         {
             HurtArea.QueueFree();
         }
+
         public override void _Ready()
         {
             HurtArea.UpdateHealthDownStream += UpdateHealth;
@@ -66,5 +70,6 @@ namespace LambastNamespace
                 }
             }
         }
+
     }
 }

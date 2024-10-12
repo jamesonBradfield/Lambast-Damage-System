@@ -1,11 +1,11 @@
 using Godot;
 namespace LambastNamespace
 {
-    //TODO: add punchthrough to Raycast.
     [Tool]
     public partial class DamageRay : DamageObject
     {
         private RayCast3D Ray;
+        [Export]
         private HurtArea3D HurtArea;
         private HurtArea3D LastHurtArea;
 
@@ -24,7 +24,7 @@ namespace LambastNamespace
                 // GD.Print("DamageRay ~ Ray : " + GD.VarToStr(Ray));
 
             }
-            Ray.TargetPosition = Vector3.Forward * 100;
+            Ray.TargetPosition = Vector3.Left * 100;
             Ray.CollideWithBodies = false;
             Ray.CollideWithAreas = true;
         }
@@ -42,22 +42,16 @@ namespace LambastNamespace
             }
             HurtArea = (Area3D)Ray.GetCollider() as HurtArea3D;
             DamageInstanceDoneDownStream += HurtArea.SendDamageToHealthBar;
-            GD.Print("DamageRay ~ " + GD.VarToStr(HurtArea.Name) + " subscribed to DamageInstanceDone");
+            GD.Print("DamageRay ~ " + GD.VarToStr(HurtArea.Name) + " subscribed to DamageInstanceDoneDownStream");
             if (HurtArea != null)
             {
                 LastHurtArea = HurtArea;
             }
             if (LastHurtArea != HurtArea)
             {
-                GD.Print("DamageRay ~ " + GD.VarToStr(HurtArea.Name) + " unsubscribed from DamageInstanceDone");
+                GD.Print("DamageRay ~ " + GD.VarToStr(HurtArea.Name) + " unsubscribed from DamageInstanceDoneDownStream");
                 DamageInstanceDoneDownStream -= LastHurtArea.SendDamageToHealthBar;
             }
-        }
-
-
-        protected override void DealDamage(DamageResource damage)
-        {
-            base.DealDamage(damage);
         }
     }
 }

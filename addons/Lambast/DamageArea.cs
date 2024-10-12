@@ -65,14 +65,5 @@ namespace LambastNamespace
             HitNodes.Remove(area as HurtArea3D);
             DamageInstanceDoneDownStream -= (area as HurtArea3D).SendDamageToHealthBar;
         }
-
-        public override void _PhysicsProcess(double delta)
-        {
-            base._PhysicsProcess(delta);
-        }
-        protected override void DealDamage(DamageResource damage)
-        {
-            base.DealDamage(damage);
-        }
     }
 }

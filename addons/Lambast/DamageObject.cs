@@ -14,35 +14,32 @@ namespace LambastNamespace
         [Signal]
         public delegate void UpdateCurrentInstancesUpStreamEventHandler(int currentInstances);
         [Export]
-        protected DamageResource[] Damage;
-        [Export]
-        private Node3D SignalObjectNode;
-        private ISignalDamageObject SignalObject;
+        protected DamageResource Damage;
+        // [Export]
+        // private Node3D SignalObjectNode;
+        // private ISignalDamageObject SignalObject;
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
-            if (!Engine.IsEditorHint())
-            {
-                if (SignalObjectNode is ISignalDamageObject)
-                {
-                    SignalObject = SignalObjectNode as ISignalDamageObject;
-                    SignalObject.DealDamageInstance += DealDamage;
-                }
-                else
-                {
-                    GD.PushWarning("SignalObjectNode doesn't have ISignalDamageObject as an interface, you should use ISignalDamageObject to get signals for your damageObjects and call said signals as needed.");
-                }
-            }
+            // if (!Engine.IsEditorHint())
+            // {
+            //     if (SignalObjectNode is ISignalDamageObject)
+            //     {
+            //         SignalObject = SignalObjectNode as ISignalDamageObject;
+            //         SignalObject.DealDamageInstance += DealDamage;
+            //     }
+            //     else
+            //     {
+            //         GD.PushWarning("SignalObjectNode doesn't have ISignalDamageObject as an interface, you should use ISignalDamageObject to get signals for your damageObjects and call said signals as needed.");
+            //     }
+            // }
         }
 
-        protected virtual void DealDamage(DamageResource damage)
+        public void DealDamage()
         {
-            EmitSignal("DamageDoneDownStream", damage);
-        }
-
-        public override void _PhysicsProcess(double delta)
-        {
-            base._PhysicsProcess(delta);
+            GD.Print("DamageObject~ DamageInstanceDoneDownStream is being called.");
+            GD.Print("DamageObject~ Damage : " + Damage.Value);
+            EmitSignal("DamageInstanceDoneDownStream", Damage.Value);
         }
     }
 }

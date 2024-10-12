@@ -7,10 +7,6 @@ public partial class Lambast : EditorPlugin
 
     public override void _EnterTree()
     {
-        // Initialization of the plugin goes here.
-        // _dock = GD.Load<PackedScene>("res://addons/Lambast/Scenes/Dock.tscn").Instantiate<Control>();
-        // GD.Print(_dock);
-        // AddControlToDock(DockSlot.LeftUl,_dock);
         Script DamagObjectScript = GD.Load<Script>("res://addons/Lambast/DamageObject.cs");
         Texture2D DamageObjectTexture = GD.Load<Texture2D>("res://addons/Lambast/DamageObject.svg");
         AddCustomType("DamageObject", "Node3D", DamagObjectScript, DamageObjectTexture);
@@ -36,10 +32,6 @@ public partial class Lambast : EditorPlugin
         RemoveCustomType("Damage Area");
         RemoveCustomType("HurtArea3D");
         RemoveCustomType("HealthBar3D");
-        // Remove the dock.
-        //RemoveControlFromDocks(_dock);
-        // Erase the control from the memory.
-        //_dock.Free();
     }
 }
 #endif

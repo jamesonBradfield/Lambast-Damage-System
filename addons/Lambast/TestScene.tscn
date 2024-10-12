@@ -1,10 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://nwwier183sx7"]
+[gd_scene load_steps=15 format=3 uid="uid://nwwier183sx7"]
 
 [ext_resource type="Script" path="res://addons/Lambast/HurtArea3D.cs" id="2_ooylw"]
-[ext_resource type="Script" path="res://addons/Lambast/DamageTimerExample.cs" id="4_kpght"]
-[ext_resource type="Resource" uid="uid://ck0owjolhd7lh" path="res://DamageResource.tres" id="5_kr2oq"]
+[ext_resource type="Script" path="res://addons/Lambast/DamageResource.cs" id="4_sjxeu"]
 [ext_resource type="Script" path="res://addons/Lambast/HealthBar3D.cs" id="5_q5sew"]
-[ext_resource type="Script" path="res://addons/Lambast/DamageArea.cs" id="6_dn3ys"]
 [ext_resource type="Script" path="res://addons/Lambast/DamageRay.cs" id="6_i46vg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0bwtf"]
@@ -30,26 +28,18 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_vjb5w")
 size = Vector2(29.195, 10)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dwgvy"]
-transparency = 1
-albedo_color = Color(0.898039, 0, 0.360784, 0.764706)
+[sub_resource type="BoxMesh" id="BoxMesh_eh6yd"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_pbi8c"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_dwgvy")
+[sub_resource type="BoxShape3D" id="BoxShape3D_4am5e"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_anoui"]
-viewport_path = NodePath("EnemyTest2/HealthBar3D/SubViewport")
+[sub_resource type="ViewportTexture" id="ViewportTexture_ks3p2"]
+viewport_path = NodePath("Enemy/HealthBar3D/SubViewport")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_unu22"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_2tcod"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_n5gg1"]
-viewport_path = NodePath("EnemyTest3/HealthBar3D/SubViewport")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_dpsfy"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_i2skm"]
-size = Vector3(4.965, 3.125, 14.465)
+[sub_resource type="Resource" id="Resource_xw08w"]
+script = ExtResource("4_sjxeu")
+Value = 25.0
 
 [node name="TestScene" type="Node3D"]
 
@@ -70,28 +60,37 @@ mesh = SubResource("PlaneMesh_20auh")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 3, 5)
 
-[node name="EnemyTest2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.966012, 0.863965, -1.7711)
+[node name="Enemy" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyTest2"]
-mesh = SubResource("BoxMesh_pbi8c")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Enemy"]
+mesh = SubResource("BoxMesh_eh6yd")
 
-[node name="HealthBar3D" type="Node3D" parent="EnemyTest2"]
+[node name="HurtArea" type="Area3D" parent="Enemy/MeshInstance3D"]
+script = ExtResource("2_ooylw")
+
+[node name="HurtAreaCollider" type="CollisionShape3D" parent="Enemy/MeshInstance3D/HurtArea"]
+shape = SubResource("BoxShape3D_4am5e")
+
+[node name="HealthBar3D" type="Node3D" parent="Enemy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05814, 0)
 script = ExtResource("5_q5sew")
 
-[node name="SubViewport" type="SubViewport" parent="EnemyTest2/HealthBar3D"]
+[node name="SubViewport" type="SubViewport" parent="Enemy/HealthBar3D"]
 disable_3d = true
 transparent_bg = true
 
-[node name="Control" type="Control" parent="EnemyTest2/HealthBar3D/SubViewport"]
+[node name="Control" type="Control" parent="Enemy/HealthBar3D/SubViewport"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 256.0
+offset_top = 256.0
+offset_right = -256.0
+offset_bottom = -256.0
 
-[node name="HealthBar" type="ProgressBar" parent="EnemyTest2/HealthBar3D/SubViewport/Control"]
+[node name="HealthBar" type="ProgressBar" parent="Enemy/HealthBar3D/SubViewport/Control"]
 layout_mode = 0
 anchor_left = 0.5
 anchor_top = 0.5
@@ -104,98 +103,26 @@ offset_bottom = 13.5
 value = 100.0
 show_percentage = false
 
-[node name="Sprite3D" type="Sprite3D" parent="EnemyTest2/HealthBar3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06215, 0)
-texture = SubResource("ViewportTexture_anoui")
+[node name="Sprite3D" type="Sprite3D" parent="Enemy/HealthBar3D"]
+texture = SubResource("ViewportTexture_ks3p2")
 
-[node name="HurtArea" type="Area3D" parent="EnemyTest2"]
+[node name="HurtArea" type="Area3D" parent="Enemy"]
 script = ExtResource("2_ooylw")
 
-[node name="HurtAreaCollider" type="CollisionShape3D" parent="EnemyTest2/HurtArea"]
-shape = SubResource("BoxShape3D_unu22")
+[node name="HurtAreaCollider" type="CollisionShape3D" parent="Enemy/HurtArea"]
+shape = SubResource("BoxShape3D_2tcod")
 
-[node name="EnemyTest3" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.786339, 0.863965, -0.148961)
+[node name="Node3D" type="Timer" parent="."]
+autostart = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="EnemyTest3"]
-mesh = SubResource("BoxMesh_pbi8c")
-
-[node name="HealthBar3D" type="Node3D" parent="EnemyTest3"]
-script = ExtResource("5_q5sew")
-
-[node name="SubViewport" type="SubViewport" parent="EnemyTest3/HealthBar3D"]
-disable_3d = true
-transparent_bg = true
-
-[node name="Control" type="Control" parent="EnemyTest3/HealthBar3D/SubViewport"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HealthBar" type="ProgressBar" parent="EnemyTest3/HealthBar3D/SubViewport/Control"]
-layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -13.5
-offset_right = 100.0
-offset_bottom = 13.5
-value = 100.0
-show_percentage = false
-
-[node name="Sprite3D" type="Sprite3D" parent="EnemyTest3/HealthBar3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.889378, 0)
-texture = SubResource("ViewportTexture_n5gg1")
-
-[node name="HurtArea" type="Area3D" parent="EnemyTest3"]
-script = ExtResource("2_ooylw")
-
-[node name="HurtAreaCollider" type="CollisionShape3D" parent="EnemyTest3/HurtArea"]
-shape = SubResource("BoxShape3D_dpsfy")
-
-[node name="DamageTimer" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.03218, 0.82337, 0)
-script = ExtResource("4_kpght")
-damage = Array[Object]([ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq"), ExtResource("5_kr2oq")])
-
-[node name="DamageArea" type="Node3D" parent="DamageTimer" node_paths=PackedStringArray("hitArea", "CollisionShapeNode", "SignalObjectNode")]
-script = ExtResource("6_dn3ys")
-hitArea = NodePath("DamageArea")
-CollisionShapeNode = NodePath("DamageArea/DamageShape")
-Damage = []
-SignalObjectNode = NodePath("..")
-
-[node name="Timer" type="Timer" parent="DamageTimer/DamageArea"]
-one_shot = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="DamageTimer/DamageArea"]
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="DamageTimer/DamageArea"]
-
-[node name="DamageArea" type="Area3D" parent="DamageTimer/DamageArea"]
-
-[node name="DamageShape" type="CollisionShape3D" parent="DamageTimer/DamageArea/DamageArea"]
-shape = SubResource("BoxShape3D_i2skm")
-
-[node name="DamageRay" type="Node3D" parent="DamageTimer" node_paths=PackedStringArray("SignalObjectNode")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.26892, 0.066417, 0)
+[node name="DamageRay" type="Node3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.19628, 0.50297, 0)
 script = ExtResource("6_i46vg")
-Damage = []
-SignalObjectNode = NodePath("..")
+Damage = SubResource("Resource_xw08w")
 
-[node name="Timer" type="Timer" parent="DamageTimer/DamageRay"]
-one_shot = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="DamageTimer/DamageRay"]
-
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="DamageTimer/DamageRay"]
-
-[node name="RayCast3D" type="RayCast3D" parent="DamageTimer/DamageRay"]
-target_position = Vector3(0, 0, -100)
+[node name="RayCast3D" type="RayCast3D" parent="Node3D/DamageRay"]
+target_position = Vector3(-100, 0, 0)
 collide_with_areas = true
 collide_with_bodies = false
+
+[connection signal="timeout" from="Node3D" to="Node3D/DamageRay" method="DealDamage"]
