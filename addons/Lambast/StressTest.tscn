@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://clpfbeai8t05k"]
+
+[ext_resource type="Script" path="res://addons/Lambast/stress_test.gd" id="1_5mwvy"]
+[ext_resource type="PackedScene" uid="uid://djt4gvmsqnqci" path="res://Scenes/EnemyTest.tscn" id="2_tg7rn"]
+[ext_resource type="Script" path="res://addons/Lambast/DamageTimerExample.cs" id="3_rd17v"]
+[ext_resource type="Resource" uid="uid://ck0owjolhd7lh" path="res://DamageResource.tres" id="4_a62yu"]
+[ext_resource type="Script" path="res://addons/Lambast/DamageArea.cs" id="5_43es6"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_0ygas"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3n717"]
+size = Vector3(100, 10, 100)
+
+[node name="StressTest" type="Node3D"]
+script = ExtResource("1_5mwvy")
+enemy_count = 1
+enemy_prefab = ExtResource("2_tg7rn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_0ygas")
+
+[node name="DamageTimer" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 7.03218, 0.82337, 0)
+script = ExtResource("3_rd17v")
+damage = Array[Object]([ExtResource("4_a62yu"), ExtResource("4_a62yu"), ExtResource("4_a62yu"), ExtResource("4_a62yu"), ExtResource("4_a62yu"), ExtResource("4_a62yu"), ExtResource("4_a62yu"), ExtResource("4_a62yu"), ExtResource("4_a62yu"), ExtResource("4_a62yu")])
+
+[node name="DamageArea" type="Node3D" parent="DamageTimer" node_paths=PackedStringArray("hitArea", "CollisionShapeNode", "SignalObjectNode")]
+script = ExtResource("5_43es6")
+hitArea = NodePath("DamageArea")
+CollisionShapeNode = NodePath("DamageArea/DamageShape")
+Damage = []
+SignalObjectNode = NodePath("..")
+
+[node name="Timer" type="Timer" parent="DamageTimer/DamageArea"]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DamageTimer/DamageArea"]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="DamageTimer/DamageArea"]
+
+[node name="DamageArea" type="Area3D" parent="DamageTimer/DamageArea"]
+
+[node name="DamageShape" type="CollisionShape3D" parent="DamageTimer/DamageArea/DamageArea"]
+shape = SubResource("BoxShape3D_3n717")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3.61487, 0)

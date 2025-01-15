@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Panku="*res://addons/panku_console/console.tscn"
 LambastSignalManager="*res://addons/Lambast/LambastSignalManager.cs"
+Confirma="*res://addons/confirma/src/scenes/confirma_autoload/ConfirmaAutoload.tscn"
 
 [display]
 
@@ -30,4 +31,4 @@ project/assembly_name="LambastAddon"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Lambast/plugin.cfg")
+enabled=PackedStringArray("res://addons/Lambast/plugin.cfg", "res://addons/confirma/plugin.cfg")

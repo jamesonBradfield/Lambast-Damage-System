@@ -1,7 +1,6 @@
 using Godot;
 namespace LambastNamespace
 {
-    // TODO: add upstream signal for DamageObject to send data back to DamageSignalObject (this way we can log once when we are about to damage what.)
     [Tool]
     public partial class DamageArea : DamageObject
     {
@@ -18,7 +17,6 @@ namespace LambastNamespace
             base._EnterTree();
             if (hitArea == null)
             {
-                GD.Print("DamageArea ~ hitarea : " + GD.VarToStr(hitArea));
                 hitArea = this.GetNodeOrNull<Area3D>("DamageArea");
                 if (hitArea == null)
                 {
@@ -26,17 +24,14 @@ namespace LambastNamespace
                     this.AddChild(hitArea);
                     hitArea.Name = "DamageArea";
                     hitArea.Owner = hitArea.GetTree().EditedSceneRoot;
-                    GD.Print("DamageArea ~ hitArea: " + GD.VarToStr(hitArea));
                 }
                 CollisionShapeNode = hitArea.GetNodeOrNull<CollisionShape3D>("DamageShape");
-                GD.Print("DamageArea ~ CollisionShapeNode : " + GD.VarToStr(CollisionShapeNode));
                 if (CollisionShapeNode == null)
                 {
                     CollisionShapeNode = new();
                     hitArea.AddChild(CollisionShapeNode);
                     CollisionShapeNode.Name = "DamageShape";
                     CollisionShapeNode.Owner = CollisionShapeNode.GetTree().EditedSceneRoot;
-                    GD.Print("DamageArea ~ CollisionShapeNode : " + GD.VarToStr(CollisionShapeNode));
                     CollisionShapeNode.Shape = new BoxShape3D();
                 }
             }
@@ -55,7 +50,6 @@ namespace LambastNamespace
         public void OnAreaEntered(Area3D area)
         {
             if (area is not HurtArea3D) { return; }
-            GD.Print("DamageArea ~ OnAreaEntered called");
             HitNodes.Add(area as HurtArea3D);
             DamageInstanceDoneDownStream += (area as HurtArea3D).SendDamageToHealthBar;
         }
@@ -63,7 +57,6 @@ namespace LambastNamespace
         public void OnAreaExited(Area3D area)
         {
             if (area is not HurtArea3D) { return; }
-            GD.Print("DamageArea ~ OnAreaExited called");
             HitNodes.Remove(area as HurtArea3D);
             DamageInstanceDoneDownStream -= (area as HurtArea3D).SendDamageToHealthBar;
         }
